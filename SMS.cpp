@@ -160,7 +160,7 @@ int main(){
             else
             pos++;
         }
-        cout<<"Record is found at Index: "<<pos+1<<endl;
+        cout<<"Record is found at Index: "<<pos<<endl;
 
 		break;
 	}
@@ -186,15 +186,32 @@ int main(){
 		case 5: 
 		{
 		cout<<"Performing Sorting opeartion"<<endl;
-        // for(int i=0;i<size;i++){ 
-        //     if(s[i].roll_no<s)
-        // }
-
+		
+		for(int i=0; i<size-1; i++){
+			bool swapped=false; 
+			for(int j=0; j<size-i-1; j++){ 
+				if(s[j].roll_no > s[j+1].roll_no){
+					swap(s[j],s[j+1]);
+					swapped = true;
+				}
+			
+			}
+			if(swapped == false)
+				break;	
+		}
+		
+	cout<<"Index\tRoll_no\tName\t\tGender"<<endl;
+	for(int i=0; i<size; i++){ 
+		cout<<i<<"\t";
+        s[i].showinfo();
+	}
+		
+		
+        
 		break;
 	}
 		case 6: 
 		{	
-		cout<<"Thank You"<<endl;
 		ch='n';
 		break;
 		}	
@@ -205,6 +222,8 @@ int main(){
 	cin>>ch;
 	
 }while(ch=='y');
-      
+     
+	 cout<<"Thank You"<<endl;
+	 cout<<"Stay Hydrated"<<endl; 
     return 0;
 }

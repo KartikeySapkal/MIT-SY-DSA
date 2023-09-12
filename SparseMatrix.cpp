@@ -33,7 +33,7 @@ class sparse_matrix{
 	void add(sparse_matrix s1, sparse_matrix s2);
 	void multiply(sparse_matrix s1, sparse_matrix s2);
 	sparse_matrix transpose();
-	
+	void addition(sparse_matrix b);
 };
 
 void sparse_matrix :: insert(int r, int c, int v){ 
@@ -80,6 +80,60 @@ sparse_matrix sparse_matrix :: transpose(){
 }
 
 
+void sparse_matrix :: addition(sparse_matrix b){ 
+
+	if(data[0][0]!=b.data[0][0] || data[0][1]!=b.data[0][1]){ 
+	cout<<"Dimentions of matrix are not equal"<<endl;
+	exit(0);
+	}
+	
+	sparse_matrix result(data[0][0],data[0][2],0);
+	int apos=1;
+	int bpos=1;
+	
+	
+	while(apos<=len && bpos<=b.len){ 
+	
+	if(data[apos][0]>b.data[bpos][0] || (data[apos][0]==b.data[bpos][0] && data[apos][1]>b.data[bpos][1] )){ 
+		
+		result.insert(b.data[bpos][0],b.data[bpos][1],b.data[bpos][2]);
+		bpos++;
+	
+	}
+	
+	else if(data[apos][0]<b.data[bpos][0] || (data[apos][0]==b.data[bpos][0] && data[apos][1]<b.data[bpos][1] )){ 
+		
+		result.insert(data[apos][0],data[apos][1],data[apos][2]);
+		apos++;
+	}
+	
+	else 
+	{
+		int addval = data[apos][2]+b.data[bpos][2];
+		if(addval!=0){
+			result.insert(data[apos][0],data[apos][1],data[apos][2]);
+		}		
+	}
+	
+	
+	}
+	
+	while(apos<=len){
+		result.insert(data[apos][0],data[apos][1],data[apos][2]);
+		apos++;
+	}	
+
+	while(bpos<=b.len){
+		result.insert(data[bpos][0],data[bpos][1],data[bpos][2]);
+		bpos++;
+	}
+	
+	result.data[0][2]=result.len;
+	result.show();
+	
+}
+
+
 int main(){ 
 	
 	int row,col,val;
@@ -100,7 +154,7 @@ int main(){
 		cin>>val;
  	}
 	
-	sparse_matrix s1(row,col,val);
+	sparse_matrix a(row,col,val);
 //	
 //	cout << s1.data[0][0] << endl;
 //	cout << s1.data[0][1] << endl;
@@ -120,18 +174,38 @@ int main(){
 		}
 		
 		
-		s1.insert(r,c,v);
+		a.insert(r,c,v);
 	}
 	
 	//displyaing matrix
 	cout<< "Dimention of matrix is: " << row << "x" << col << endl;
 	cout<< "Rows|\tCols|\tVals|" << endl;
-	s1.show();
-	sparse_matrix b;
-			
-	b = s1.transpose();
+	a.show();
+
 	
-	s1.show();
+		sparse_matrix b(row,col,val);
+		
+		for(int i=0; i<val; i++){ 
+		cout << "Enter Row no/col no /val: " << endl; 
+		cin>>r>>c>>v;
+		
+		if(r>=row || c>=col){ 
+		cout << "Invalid input" << endl;
+		cout << "Enter Row no/col no /val: (again)" << endl; 
+		cin>>r>>c>>v;
+		}
+		
+		
+		b.insert(r,c,v);
+	}
+	
+	cout<< "Dimention of matrix is: " << row << "x" << col << endl;
+	cout<< "Rows|\tCols|\tVals|" << endl;
+	b.show();
+	
+	a.addition(b);	
+	
+	
 	
 	
 	return 0;

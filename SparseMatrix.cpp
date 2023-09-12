@@ -1,3 +1,4 @@
+
 //sparse matrix
 //zero elemnets must be greater than half no of elements
 
@@ -19,11 +20,19 @@ class sparse_matrix{
 		len = 0;
 	}
 	
+	sparse_matrix(){
+		data[0][0]=0;
+		data[0][1]=0;
+		data[0][2]=0;
+		len = 0;
+	}
+	
 	
 	void insert(int r,int c, int l);
 	void show();
 	void add(sparse_matrix s1, sparse_matrix s2);
 	void multiply(sparse_matrix s1, sparse_matrix s2);
+	sparse_matrix transpose();
 	
 };
 
@@ -46,6 +55,28 @@ void sparse_matrix :: show(){
 	}
 	cout<< endl ; 
 
+}
+
+
+sparse_matrix sparse_matrix :: transpose(){
+	
+	sparse_matrix t(data[0][1],data[0][0],data[0][2]);
+	
+	for(int i=0; i<data[0][1]; i++){ 
+		for(int j=0; j<=len; j++)
+		{ 
+			if(data[j][1]==i){
+				t.len++;
+				
+				t.data[t.len][0]=data[j][1];
+				t.data[t.len][1]=data[j][0];
+				t.data[t.len][2]=data[j][2];	
+
+			}
+		}
+	}
+	
+	return t;	
 }
 
 
@@ -96,34 +127,13 @@ int main(){
 	cout<< "Dimention of matrix is: " << row << "x" << col << endl;
 	cout<< "Rows|\tCols|\tVals|" << endl;
 	s1.show();
+	sparse_matrix b;
 			
+	b = s1.transpose();
+	
+	s1.show();
 	
 	
-	
-	
-//	
-//	do{ 
-//	
-//	cout<<"Enter choice: "<<endl;
-//	cout<<"1.Addition\n2.Multiplication\n3.exit";
-//	cin>>choice;
-//	
-	
-//	switch(choice){ 
-//	
-//	case 1: 
-//	{
-//		cout<<"Performing insertion: "<<endl;
-//		for(int i=0; i<val; i++)
-//		
-//	}
-//	
-//	
-//	
-//	}
-//	
-//	
-//}while(ch!='n');
-return 0;
+	return 0;
 }
 

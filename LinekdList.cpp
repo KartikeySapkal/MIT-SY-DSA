@@ -88,11 +88,7 @@ void sll::insert(){
 	char ch;
 	char info[50];
 	
-	cout<<"Do you want to insert at first Node: (y/n)"<<endl;
-	cin>>ch;
-	p=head;
-	
-	if(ch=='y'){ 
+	cout<<"Enter Values to insert"<<endl;
 	
 	cout<<"Enter Your Name: "<<endl;
 	cin>>temp->studName;
@@ -105,36 +101,101 @@ void sll::insert(){
 	
 	temp->next=NULL;
 	
+	cout<<"Do you want to insert at first Node: (y/n)"<<endl;
+	cin>>ch;
+	p=head;
 	
+	if(ch=='y'){ 
+
 	temp->next = p;
 	head = temp;
 	
 	}
 	else{
-	
-	cout<<"Enter Student Name after Which you want to add Node: "<<endl;
-	cin>>info;
-	
-	cout<<"Enter Your Name: "<<endl;
-	cin>>temp->studName;
-		
-	cout<<"ENter Package In LPA: "<<endl;
-	cin>>temp->package;
-	
-	cout<<"Enter Your Company Name: "<<endl;
-	cin>>temp->companyName;	
-	temp->next=NULL;	
-		
+	cout<<"Enter Student Name After Which you want to add: "<<endl;
+	cin>>info;	
 	while(p!=NULL){ 
-		if(strcmp((temp->studName),info)==0);
+		if(strcmp((p->studName),info)==0)
 		{
 			temp->next = p->next;
 			p->next = temp;	
-			p = p->next; 
+			break;
 		}
+		
+		else
+			p=p->next;
+		
 	}	
 }	
 	
+}
+
+void sll::del(){ 
+
+	Node *temp,*prev;
+	
+	char key[50];
+	
+	temp = head;
+	prev = NULL;
+
+	cout<<"Enter Student Name Whose Record You want to Delete: "<<endl;
+	cin>>key;
+	
+	
+	while(temp!=NULL){ 
+		
+		if(strcmp((temp->studName),key)==0)
+	{
+		if(temp==head){ 
+		head = head->next;
+		delete(temp);
+		break;
+		}
+		
+		else{
+		
+	
+		prev->next = temp->next;
+		delete(temp);
+		break;
+}
+	}
+	else{
+		prev=temp;
+		temp = temp->next;
+		}
+	}
+	
+	
+}
+
+void sll::search(){
+	
+	char key[50];
+	Node *temp =head;
+	cout<<"ENter Student Name to Search"<<endl;
+	cin>>key;
+	while(temp!=NULL){ 
+	if(strcmp(temp->studName,key)==0){ 
+	
+		cout<<"Record Found"<<endl;
+		cout<<"Name \t\tCompany \t\tPackage"<<endl;
+		cout<<temp->studName<<"\t\t"<<temp->companyName<<"\t\t"<<temp->package;
+		cout<<endl;
+		break;
+	
+	}
+	else
+	temp=temp->next;
+	
+	
+	if(temp==NULL)
+	{
+	cout<<"Record Not Found"<<endl;
+	break;					
+		}
+	}
 }
 
 
@@ -147,16 +208,55 @@ int main(){
 	cout<<"Welcome to Placement Analalysis System"<<endl;
 	cout<<"Menu"<<endl;
 	
-	cout<<"1.Create Entry\n2.Add Entry\n3.Delete Entry\n4.Search Entry\n5.Update Entry\n6.Delete Entry\n7.Reverse\n8.Exit"<<endl;
+	
+	
+	char ch ='y';
+	
+	while(ch=='y'){
+		
+	cout<<"1.Create Entry\n2.Add Entry\n3.Delete Entry\n4.Search Entry\n5.Update Entry\n6.Sort Entries\n7.Reverse\n8.Exit"<<endl;
 	cin>>choice;
 	
-	
-		s1.create();
-		s1.display();
-		s1.insert();
-		s1.display();
+	switch(choice){ 
 	
 	
+		
+	case 1: 
+	cout<<"Creating Entry: "<<endl;
+	s1.create();	
+	break;
+	case 2: 
+	cout<<"inserting Entries: "<<endl;
+	s1.insert();
+	break;
+	case 3: 
+	cout<<"Deleting Entry"<<endl;
+	s1.del();
+	break;
+	case 4:
+	cout<<"Searching Entry: "<<endl;
+	s1.search();
+	break;
+	case 5: 
+	cout<<"Updating Entry: "<<endl;
+//	s1.update();
+	break;
+	case 6: 
+	cout<<"Sorting Entries: "<<endl;
+//	s1.sort();
+	break;
+	case 7: 
+	cout<<"Reversing Entries"<<endl;
+//	s1.reverse();
+	break;
+	case 8: 
+	cout<<"Thanks"<<endl;	
+	ch='n';
+	exit(0);
+	
+	}
+		
+}
 	
 	return 0;
 }

@@ -43,12 +43,12 @@ void stack::push(string s1){
 
 	if(isFull()){ 
 	cout<<"Stack is Full"<<endl;
+	return;
 	}
 	else{
 	
 	top++;
 	s[top] = s1;
-	cout<<"Pushed"<<endl;
 	}
 }
 
@@ -62,18 +62,64 @@ string stack::pop(){
 	{ 
 	temp = s[top];
 	top--;
-	cout<<"Popped"<<endl;
 	return temp;
 	}
 }
 
 
+class expression{ 	
+public: 
+string infix,prefix,postfix;
+stack stk;
+
+bool isoperator(char x){ 
+
+	if(x == '+'|| x=='-'|| x=='*'|| x=='/'|| x=='^'|| x=='%')
+	return true;
+	else
+	return false;
+	
+}	
+
+void prefix_to_infix(){ 
+
+	cout<<"Enter Expression: "<<endl;
+	cin>>prefix;
+	
+	int count = prefix.length();
+
+	for(int i = count-1; i>=0 ; i--){ 
+	
+	if(isoperator(prefix[i])){ 
+	
+	string op1 = stk.pop();
+	string op2 = stk.pop();
+	
+	string temp = "("+op1+prefix[i]+op2+")";
+//	cout<<"Temp "<<temp<<endl;
+	stk.push(temp);
+	
+	}
+	
+	else 
+	stk.push(string(1,prefix[i]));	
+
+	}
+cout<<stk.pop();
+}		
+
+};
+
 
 int main(){ 
 
-
 	stack s1;
-	s1.push("Kartikey");
-	s1.pop();
+//	s1.push("Kartikey");
+//	s1.pop();
+	
+	expression e;
+	e.prefix_to_infix();
+	
+	
 	return 0;
 }
